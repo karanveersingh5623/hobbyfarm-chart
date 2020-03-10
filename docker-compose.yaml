@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+
+  kind:
+    build: 
+      context: ./cicd/docker-kind
+    container_name: hf-kind
+    hostname: kind
+    privileged: true
+    environment:
+      KIND_PORT: ${KIND_PORT:-16220}
+    networks:
+    - dev
+    ports:
+    - "${KIND_PORT:-16220}:6443"
+    volumes:
+    - /etc/resolv.conf:/etc/resolv.conf:ro
+    - /lib/modules:/lib/modules:ro
+    - kind-var:/var
+
+  kubectl:
+    build: 
+      context: ./cicd/docker-kubectl
+    container_name: hf-kubectl
+    user: ${FIXUID:-1000}:${FIXGID:-1000}
+    networks:
+    - dev
+    volumes:
+    - .:/app
+    depends_on:
+    - kind
+
+networks:
+  dev:
+    external: true
+    name: hobbyfarm-dev
+
+volumes:
+  kind-var: {}

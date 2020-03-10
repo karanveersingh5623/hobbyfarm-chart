@@ -1,0 +1,4 @@
+user: alpine
+group: alpine
+paths:
+- /home/alpine
