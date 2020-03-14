@@ -1,4 +1,3 @@
-{{ if .Values.seed.enabled }}
 apiVersion: hobbyfarm.io/v1
 kind: DynamicBindConfiguration
 metadata:
@@ -10,9 +9,8 @@ spec:
   restricted_bind: true
   restricted_bind_value: xyz123
   burst_count_capacity:
-    ubuntu1604-docker: 2
+    ubuntu1604-docker: 30
   burst_capacity:
     cpu: 0
     memory: 0
     storage: 0
-{{ end }}
