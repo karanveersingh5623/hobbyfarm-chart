@@ -37,10 +37,16 @@ spec:
 {{ if $.Values.ingress.tls.enabled }}
   tls:
   - hosts:
+    {{- if gt (len $.Values.ingress.tls.hosts) 0 }}
+    {{- range $host := $.Values.ingress.tls.hosts }}
+    - {{ $host | quote }}
+    {{- end }}
+    {{- else }}
     - {{ $.Values.ingress.hostnames.admin }}
     - {{ $.Values.ingress.hostnames.backend }}
     - {{ $.Values.ingress.hostnames.shell }}
     - {{ $.Values.ingress.hostnames.ui }}
+    {{- end }}
     secretName: {{ $.Values.ingress.tls.secretName }}
 {{ end }}
 {{ end }}

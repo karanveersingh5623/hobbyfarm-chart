@@ -9,9 +9,6 @@ gargantua:
 ingress:
   enabled: false
   annotations: {}
-  tls:
-    enabled: true
-    secretName: hobbyfarm-cert
   hostnames:
     # ui: example.com
     # admin: admin.example.com
@@ -20,6 +17,11 @@ ingress:
     ranchervm: {}
       # frontend: vm.example.com
       # backend: vmapi.example.com
+  tls:
+    enabled: true
+    # defaults to ingress.hostnames if empty
+    hosts: []
+    secretName: hobbyfarm-cert
 
 # seed with some example data
 seed:
