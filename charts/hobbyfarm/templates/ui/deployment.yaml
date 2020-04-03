@@ -22,6 +22,10 @@ spec:
               {{ else }}
               value: gargantua
               {{- end -}}
+            {{- if $.Values.ui.support }}
+            - name: HF_SUPPORT
+              value: {{ $.Values.ui.support | quote }}
+            {{ end }}
       {{- if $.Values.ui.configMapName }}
           volumeMounts:
             - name: config
