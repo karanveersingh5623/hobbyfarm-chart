@@ -41,19 +41,29 @@ terraform:
   # one of: ranchervm (broken), google, aws, vsphere (untested), do (untested)
   provider: aws
 
+  module:
+    url: https://github.com/hobbyfarm/tf-module-aws
+    # https://github.com/boxboat/tf-module-google
+    # https://github.com/hobbyfarm/tf-module-rvm
+    # https://github.com/hobbyfarm/tf-module-vsphere
+    # https://github.com/dramich/domodule
+
+    branch: master
+    # tag:
+    # commit:
+    # secretName:
+    intervalSeconds: 300
+
   ranchervm:
-    module: https://github.com/hobbyfarm/tf-module-rvm
     image: rancher/vm-ubuntu:16.04.5-server-amd64
     endpoint: "http://backend.ranchervm-system:9500"
     access_key: ''
     secret_key: ''
 
   google:
-    module: https://github.com/boxboat/tf-module-google
     # credentials: |
 
   aws:
-    module: https://github.com/hobbyfarm/tf-module-aws
     image: ami-04763b3055de4860b
     region: us-east-1
     # access_key:
@@ -62,10 +72,8 @@ terraform:
     # vpc_security_group_id:
 
   vsphere:
-    module: https://github.com/hobbyfarm/tf-module-vsphere
 
   do:
-    module: https://github.com/dramich/domodule
 
 # https://github.com/hobbyfarm/vm
 ranchervm:
