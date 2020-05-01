@@ -8,4 +8,14 @@ spec:
   git:
     url: {{ $.Values.terraform.module.url }}
     branch: {{ $.Values.terraform.module.branch }}
+    intervalSeconds: {{ $.Values.terraform.module.intervalSeconds }}
+    {{- if $.Values.terraform.module.tag }}
+    tag: {{ $.Values.terraform.module.tag }}
+    {{- end }}
+    {{- if $.Values.terraform.module.commit }}
+    commit: {{ $.Values.terraform.module.commit }}
+    {{- end }}
+    {{- if $.Values.terraform.module.secretName }}
+    secretName: {{ $.Values.terraform.module.secretName }}
+    {{- end }}
 {{ end }}
