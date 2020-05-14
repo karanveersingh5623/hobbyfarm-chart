@@ -28,6 +28,12 @@ spec:
       - backend:
           serviceName: shell
           servicePort: 80
+  - host: {{ $.Values.ingress.hostnames.proxy }}
+    http:
+      paths:
+      - backend:
+          serviceName: proxy
+          servicePort: 80
   - host: {{ $.Values.ingress.hostnames.ui }}
     http:
       paths:
