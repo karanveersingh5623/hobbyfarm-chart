@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gargantua-proxy
+  labels:
+    app: gargantua-proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ $.Values.proxy.replicas }}
+  selector:
+    matchLabels:
+      app: gargantua-proxy
+  template:
+    metadata:
+      labels:
+        app: gargantua-proxy
+    spec:
+      containers:
+      - name: gargantua
+        image: {{ $.Values.gargantua.image }}
+        command:
+        - gargantua
+        - -alsologtostderr
+        - -v=9
+        - -proxyserver
+        - -disablecontrollers
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: gargantua-proxy
+  ports:
+    - name: http
+      port: 80
+    - name: https
+      port: 443
+      targetPort: 80
+---
+{{ if $.Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: proxy
+  namespace: {{ .Release.Namespace }}
+  annotations:
+  {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  rules:
+  - host: {{ $.Values.ingress.hostnames.proxy }}
+    http:
+      paths:
+      - backend:
+          serviceName: proxy
+          servicePort: http
+{{ if $.Values.ingress.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ $.Values.ingress.hostnames.proxy }}
+{{- if hasKey .Values.ingress.tls.secrets "proxy" }}
+    secretName: {{ $.Values.ingress.tls.secrets.proxy }}
+{{- end }}
+{{ end }}
+{{ end }}

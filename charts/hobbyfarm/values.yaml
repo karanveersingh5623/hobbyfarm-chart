@@ -5,7 +5,18 @@ ui:
   # configMapName: ui-config
   # support: support@tld.com
 gargantua:
-  image: hobbyfarm/gargantua:v0.0.3
+  image: hobbyfarm/gargantua:v0.1.5
+  logLevel: "0"
+  dynamicBaseNamePrefix: "dynamic"
+  scheduledBaseNamePrefix: "scheduled"
+
+shell:
+  replicas: 1
+proxy:
+  replicas: 1
+
+# use insecure protocols (e.g., for local development)
+insecure: false
 
 ingress:
   enabled: false
@@ -15,6 +26,7 @@ ingress:
     # admin: admin.example.com
     # backend: hf.example.com
     # shell: shell.example.com
+    # proxy: proxy.example.com
     ranchervm: {}
       # frontend: vm.example.com
       # backend: vmapi.example.com
