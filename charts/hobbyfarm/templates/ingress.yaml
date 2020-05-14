@@ -51,6 +51,7 @@ spec:
     - {{ $.Values.ingress.hostnames.admin }}
     - {{ $.Values.ingress.hostnames.backend }}
     - {{ $.Values.ingress.hostnames.shell }}
+    - {{ $.Values.ingress.hostnames.proxy }}
     - {{ $.Values.ingress.hostnames.ui }}
     {{- end }}
     secretName: {{ $.Values.ingress.tls.secretName }}
