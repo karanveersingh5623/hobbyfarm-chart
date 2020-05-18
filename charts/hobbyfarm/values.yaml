@@ -13,15 +13,14 @@ gargantua:
 syncer:
   enabled: false
   image: hobbyfarm/syncer
-  url: https://github.com/hobbyfarm/content
-  # sync every X seconds
-  interval: 600
   # whether to patch or replace objects
   replace: false
-  webhook:
-    enabled: false
-    secret:
-    service: github
+  gitSync:
+    image: k8s.gcr.io/git-sync:v3.1.6
+    env:
+      GIT_SYNC_REPO: https://github.com/hobbyfarm/content
+      GIT_SYNC_BRANCH: master
+    secret: git-creds
 
 shell:
   replicas: 1

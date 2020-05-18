@@ -17,21 +17,29 @@ spec:
         - name: syncer
           image: {{ $.Values.syncer.image }}
           args:
-            - --url
-            - {{ $.Values.syncer.url }}
-            {{- if $.Values.syncer.webhook.enabled }}
-            - --webhook
-            {{- if $.Values.syncer.webhook.secret }}
-            - {{ $.Values.syncer.webhook.secret }}
-            {{- end }}
-            - --service
-            - {{ $.Values.syncer.webhook.service }}
-            {{- end }}
-            {{- if not $.Values.syncer.webhook.enabled }}
-            - --interval
-            - {{ $.Values.syncer.interval }}
-            {{- end }}
             {{- if $.Values.syncer.replace }}
             - --replace
             {{- end }}
+          volumeMounts:
+            - name: repo
+              mountPath: /repo
+        - name: git-sync
+          image: {{ $.Values.syncer.gitSync.image }}
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: repo
+              mountPath: /tmp/git
+          env:
+            {{- range $key,$value := $.Values.syncer.gitSync.env }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+          {{- if $.Values.syncer.gitSync.secret }}
+          envFrom:
+            - secretRef:
+                name: {{ $.Values.syncer.gitSync.secret }}
+          {{- end }}
+      volumes:
+        - name: repo
+          emptyDir: {}
 {{- end }}
