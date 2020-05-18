@@ -31,3 +31,9 @@ For example,
     http://${vminfo:node01:public_ip}:8080
 
 Here is a list of the available options: https://github.com/hobbyfarm/ui/blob/master/src/app/VM.ts
+
+
+## development
+
+See the [CONTRIBUTING.md](https://github.com/hobbyfarm/hobbyfarm/blob/master/CONTRIBUTING.md) file in the repo.
+

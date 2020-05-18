@@ -8,4 +8,5 @@ spec:
   names:
     kind: Course
     plural: courses
+    singular: course
   scope: Cluster
