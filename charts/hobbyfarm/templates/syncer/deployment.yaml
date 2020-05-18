@@ -33,5 +33,5 @@ spec:
             {{- end }}
             {{- if $.Values.syncer.replace }}
             - --replace
-            {{- }}
+            {{- end }}
 {{- end }}
