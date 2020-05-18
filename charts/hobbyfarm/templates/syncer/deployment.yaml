@@ -17,13 +17,13 @@ spec:
         - name: syncer
           image: {{ $.Values.syncer.image }}
           args:
+            - /repo/{{ last (splitList "/" $.Values.syncer.gitSync.env.GIT_SYNC_REPO) }}
             {{- if $.Values.syncer.replace }}
             - --replace
             {{- end }}
           volumeMounts:
             - name: repo
               mountPath: /repo
-              subPath: {{ last (splitList "/" $.Values.syncer.gitSync.env.GIT_SYNC_REPO) }}
         - name: git-sync
           image: {{ $.Values.syncer.gitSync.image }}
           imagePullPolicy: Always
