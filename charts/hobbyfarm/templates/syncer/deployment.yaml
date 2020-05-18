@@ -1,0 +1,37 @@
+{{ if $.Values.syncer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncer
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      component: syncer
+  template:
+    metadata:
+      labels:
+        component: syncer
+    spec:
+      containers:
+        - name: syncer
+          image: {{ $.Values.syncer.image }}
+          args:
+            - --url
+            - {{ $.Values.syncer.url }}
+            {{- if $.Values.syncer.webhook.enabled }}
+            - --webhook
+            {{- if $.Values.syncer.webhook.secret }}
+            - {{ $.Values.syncer.webhook.secret }}
+            {{- end }}
+            - --service
+            - {{ $.Values.syncer.webhook.service }}
+            {{- end }}
+            {{- if not $.Values.syncer.webhook.enabled }}
+            - --interval
+            - {{ $.Values.syncer.interval }}
+            {{- end }}
+            {{- if $.Values.syncer.replace }}
+            - --replace
+            {{- }}
+{{- end }}

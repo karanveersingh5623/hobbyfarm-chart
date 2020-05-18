@@ -40,6 +40,12 @@ spec:
       - backend:
           serviceName: ui
           servicePort: 80
+  - host: {{ $.Values.ingress.hostnames.syncer }}
+    http:
+      paths:
+      - backend:
+          serviceName: syncer
+          servicePort: 80
 {{ if $.Values.ingress.tls.enabled }}
   tls:
   - hosts:
@@ -53,6 +59,7 @@ spec:
     - {{ $.Values.ingress.hostnames.shell }}
     - {{ $.Values.ingress.hostnames.proxy }}
     - {{ $.Values.ingress.hostnames.ui }}
+    - {{ $.Values.ingress.hostnames.syncer }}
     {{- end }}
     secretName: {{ $.Values.ingress.tls.secretName }}
 {{ end }}

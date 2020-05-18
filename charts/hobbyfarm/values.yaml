@@ -10,6 +10,19 @@ gargantua:
   dynamicBaseNamePrefix: "dynamic"
   scheduledBaseNamePrefix: "scheduled"
 
+syncer:
+  enabled: false
+  image: hobbyfarm/syncer
+  url: https://github.com/hobbyfarm/content
+  # sync every X seconds
+  interval: 600
+  # whether to patch or replace objects
+  replace: false
+  webhook:
+    enabled: false
+    secret:
+    service: github
+
 shell:
   replicas: 1
 proxy:
@@ -27,6 +40,7 @@ ingress:
     # backend: hf.example.com
     # shell: shell.example.com
     # proxy: proxy.example.com
+    # syncer: syncer.example.com
     ranchervm: {}
       # frontend: vm.example.com
       # backend: vmapi.example.com
