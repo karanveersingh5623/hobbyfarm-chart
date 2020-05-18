@@ -15,12 +15,10 @@ syncer:
   image: hobbyfarm/syncer
   # whether to patch or replace objects
   replace: false
-  gitSync:
-    image: k8s.gcr.io/git-sync:v3.1.6
-    env:
-      GIT_SYNC_REPO: https://github.com/hobbyfarm/content
-      GIT_SYNC_BRANCH: master
-    secret: git-creds
+  env:
+    GIT_REPO: https://github.com/hobbyfarm/content
+    GIT_BRANCH: master
+  secret: git-creds
 
 shell:
   replicas: 1

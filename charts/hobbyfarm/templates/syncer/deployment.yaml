@@ -17,30 +17,17 @@ spec:
         - name: syncer
           image: {{ $.Values.syncer.image }}
           args:
-            - /repo/{{ last (splitList "/" $.Values.syncer.gitSync.env.GIT_SYNC_REPO) }}
             {{- if $.Values.syncer.replace }}
             - --replace
             {{- end }}
-          volumeMounts:
-            - name: repo
-              mountPath: /repo
-        - name: git-sync
-          image: {{ $.Values.syncer.gitSync.image }}
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: repo
-              mountPath: /tmp/git
           env:
-            {{- range $key,$value := $.Values.syncer.gitSync.env }}
+            {{- range $key,$value := $.Values.syncer.env }}
             - name: {{ $key }}
               value: {{ $value }}
             {{- end }}
-          {{- if $.Values.syncer.gitSync.secret }}
+          {{- if $.Values.syncer.secret }}
           envFrom:
             - secretRef:
-                name: {{ $.Values.syncer.gitSync.secret }}
+                name: {{ $.Values.syncer.secret }}
           {{- end }}
-      volumes:
-        - name: repo
-          emptyDir: {}
 {{- end }}
