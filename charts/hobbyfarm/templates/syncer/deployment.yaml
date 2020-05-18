@@ -23,12 +23,13 @@ spec:
           volumeMounts:
             - name: repo
               mountPath: /repo
+              subPath: {{ last (splitList "/" $.Values.syncer.gitSync.env.GIT_SYNC_REPO) }}
         - name: git-sync
           image: {{ $.Values.syncer.gitSync.image }}
           imagePullPolicy: Always
           volumeMounts:
             - name: repo
-              mountPath: /tmp/git/{{ last (splitList "/" $.Values.syncer.gitSync.env.GIT_SYNC_REPO) }}
+              mountPath: /tmp/git
           env:
             {{- range $key,$value := $.Values.syncer.gitSync.env }}
             - name: {{ $key }}
