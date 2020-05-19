@@ -15,6 +15,10 @@ syncer:
   image: hobbyfarm/syncer
   # whether to patch or replace objects
   replace: false
+  webhook:
+    enabled: false
+    secret:
+    service: github
   env:
     GIT_REPO: https://github.com/hobbyfarm/content
     GIT_BRANCH: master

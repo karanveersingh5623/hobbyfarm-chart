@@ -20,6 +20,14 @@ spec:
             {{- if $.Values.syncer.replace }}
             - --replace
             {{- end }}
+            {{- if $.Values.syncer.webhook.enabled }}
+            - --webhook
+            {{- if $.Values.syncer.webhook.secret }}
+            - {{ $.Values.syncer.webhook.secret }}
+            {{- end }}
+            - --service
+            - {{ $.Values.syncer.webhook.service }}
+            {{- end }}
           env:
             {{- range $key,$value := $.Values.syncer.env }}
             - name: {{ $key }}
