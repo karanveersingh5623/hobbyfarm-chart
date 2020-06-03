@@ -30,7 +30,7 @@ proxy:
   replicas: 1
 
 # use insecure protocols (e.g., for local development)
-insecure: false
+insecure: true
 
 ingress:
   enabled: false
@@ -53,7 +53,7 @@ ingress:
 
 # seed with some example data
 seed:
-  enabled: false
+  enabled: true
 
 # https://github.com/rancher/terraform-controller
 terraform:
@@ -67,10 +67,11 @@ terraform:
     threads: 2
 
   # one of: ranchervm (broken), google, aws, vsphere (untested), do (untested)
-  provider: aws
+  provider: ranchervm
 
   module:
-    url: https://github.com/hobbyfarm/tf-module-aws
+    url: https://github.com/hobbyfarm/tf-module-rvm 
+    #https://github.com/hobbyfarm/tf-module-aws
     # https://github.com/boxboat/tf-module-google
     # https://github.com/hobbyfarm/tf-module-rvm
     # https://github.com/hobbyfarm/tf-module-vsphere
@@ -82,11 +83,11 @@ terraform:
     # secretName:
     intervalSeconds: 300
 
-  ranchervm:
-    image: rancher/vm-ubuntu:16.04.5-server-amd64
-    endpoint: "http://backend.ranchervm-system:9500"
-    access_key: ''
-    secret_key: ''
+#  ranchervm:
+#    image: rancher/vm-ubuntu:16.04.5-server-amd64
+#    endpoint: "http://backend.ranchervm-system:9500"
+#    access_key: ''
+#    secret_key: ''
 
   google:
     # credentials: |
@@ -105,7 +106,7 @@ terraform:
 
 # https://github.com/hobbyfarm/vm
 ranchervm:
-  enabled: false
+  enabled: true
   nic: "eth0"
   bridge: "en0"
   # bridge: "docker0"
