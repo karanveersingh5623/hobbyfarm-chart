@@ -19,6 +19,10 @@ spec:
 {{ toYaml .Values.terraform.ranchervm | indent 4 -}}
     {{ else if eq .Values.terraform.provider "aws" }}
 {{ toYaml .Values.terraform.aws | indent 4 -}}
+
+{{ else if eq .Values.terraform.provider "google" }}
+{{ toYaml .Values.terraform.google | indent 4 -}}
+
     {{ end }}
 
 
